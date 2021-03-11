@@ -15,6 +15,9 @@
 
 int estado = 0;
 int t;
+int state = 0;
+int cont;
+
 
 void main(void) 
 {
@@ -27,7 +30,6 @@ void main(void)
                 break;
             case 1:
                 semaforo_init();
-                init_display();
                     estado = 2;
                 break;
             case 2:
@@ -54,7 +56,6 @@ void main(void)
                 verde(0);
                 amarelo(1);
                 t = 3000;
-                contagem_amarelo();
                 estado = 6;
                 break;
             case 6:
@@ -68,8 +69,7 @@ void main(void)
                 amarelo(0);
                 vermelho(1);
                 verdePed(1);
-                contagem_vermelho();
-                t = 7250;
+                t = 5000;
                     estado = 8;
                 break;
             case 8:
@@ -77,6 +77,58 @@ void main(void)
                 --t;
                 if ( t <= 0 )
                     estado = 2;
+                break;
+        }
+        
+        switch ( state )
+        {
+            case 0:
+                    state = 1;
+                break;
+            case 1:
+                init_display();
+                    state = 2;
+                break;
+            case 2:
+                PORTB = 0x00;
+                if( botao() == 1 )
+                    state = 3;
+                break;
+            case 3:
+                cont = 3;
+                t = 3000;
+                state = 4;
+                break;
+            case 4:
+                --t;
+                delay(1);
+                if ( t <= 0 )
+                    state = 5;
+                break;
+            case 5:
+                cont--;
+                display7seg( cont );
+                break;
+            case 6:
+                if (cont <= 0)
+                    state = 7;
+                break;
+            case 7:
+                t = 7000;
+                state = 8;
+                break;
+            case 8:
+                --t;
+                delay(1);
+                if ( t <= 0 )
+                    state = 9;
+            case 9:
+                cont--;
+                display7seg( cont );
+                break;
+            case 10:
+                if (cont <= 0)
+                    state = 2;
                 break;
         }
     } 
