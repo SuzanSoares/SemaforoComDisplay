@@ -36,6 +36,7 @@ void main(void)
                 amarelo(0);
                 verdePed(0);
                 vermelhoPed(1);
+                PORTB = 0x00;
                     if( botao() == 1 )
                     estado = 3;
                 break;
@@ -52,8 +53,8 @@ void main(void)
             case 5:
                 verde(0);
                 amarelo(1);
-                contagem_amarelo();
                 t = 3000;
+                contagem_amarelo();
                 estado = 6;
                 break;
             case 6:
@@ -68,7 +69,7 @@ void main(void)
                 vermelho(1);
                 verdePed(1);
                 contagem_vermelho();
-                t = 5000;
+                t = 7250;
                     estado = 8;
                 break;
             case 8:
